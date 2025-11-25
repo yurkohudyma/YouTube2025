@@ -1,4 +1,4 @@
-package ua.hudyma.domain;
+package ua.hudyma.domain.wallet;
 
 import jakarta.persistence.*;
 import lombok.Data;
@@ -8,13 +8,13 @@ import java.sql.Types;
 import java.util.UUID;
 
 @Entity
-@Table(name = "users")
+@Table(name = "payment_methods")
 @Data
-public class User implements BaseEntity {
+public class Method {
     @Id
     @JdbcTypeCode(Types.BINARY)
     private UUID uuid = UUID.randomUUID();
-    @Embedded
-    private Profile profile;
-
+    @ManyToOne
+    @JoinColumn(name = "wallet_id")
+    private Wallet wallet;
 }

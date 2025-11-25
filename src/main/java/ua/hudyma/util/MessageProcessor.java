@@ -1,8 +1,7 @@
 package ua.hudyma.util;
 
-import jakarta.persistence.EntityNotFoundException;
 import lombok.extern.log4j.Log4j2;
-import ua.hudyma.domain.BaseEntity;
+import ua.hudyma.domain.personal.BaseEntity;
 
 import java.util.List;
 import java.util.function.Function;

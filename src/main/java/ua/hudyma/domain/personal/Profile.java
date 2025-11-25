@@ -1,4 +1,4 @@
-package ua.hudyma.domain;
+package ua.hudyma.domain.personal;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
@@ -14,7 +14,7 @@ import java.util.List;
 
 @Embeddable
 @Data
-public class Profile {
+public class Profile implements BaseEntity {
     private String name;
     @Enumerated(EnumType.STRING)
     private Sex sex;

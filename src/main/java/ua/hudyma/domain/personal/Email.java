@@ -1,4 +1,4 @@
-package ua.hudyma.domain;
+package ua.hudyma.domain.personal;
 
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.EnumType;

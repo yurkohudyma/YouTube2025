@@ -6,7 +6,7 @@ import lombok.SneakyThrows;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ua.hudyma.domain.User;
+import ua.hudyma.domain.personal.User;
 import ua.hudyma.dto.UserReqDto;
 import ua.hudyma.dto.UserRespDto;
 import ua.hudyma.mapper.UserMapper;

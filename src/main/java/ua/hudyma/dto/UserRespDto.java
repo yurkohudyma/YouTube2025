@@ -1,6 +1,5 @@
 package ua.hudyma.dto;
 
-import java.time.LocalDate;
 import java.util.List;
 
 public record UserRespDto(
@@ -9,5 +8,6 @@ public record UserRespDto(
         String sex,
         List<String> addressList,
         List<String> emailList,
-        List<String> phoneList) {
+        List<String> phoneList,
+        List<String> deviceList) {
 }
