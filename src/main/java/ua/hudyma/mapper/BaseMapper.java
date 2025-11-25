@@ -22,5 +22,10 @@ public abstract class BaseMapper<RESP_DTO, ENTITY, REQ_DTO> {
         }
         return source.stream().map(mapper).toList();
     }
+    public <E> List<String> getEntityFieldList(
+            List<E> entityList,
+            Function<E, String> mapper) {
+        return entityList.stream().map(mapper).toList();
+    }
 }
 
