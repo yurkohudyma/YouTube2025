@@ -5,7 +5,7 @@ import java.util.List;
 
 public record UserRespDto(
         String name,
-        LocalDate birthDate,
+        String birthDate,
         String sex,
         List<String> addressList,
         List<String> emailList,

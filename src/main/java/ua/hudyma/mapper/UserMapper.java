@@ -5,6 +5,9 @@ import ua.hudyma.domain.*;
 import ua.hudyma.dto.UserReqDto;
 import ua.hudyma.dto.UserRespDto;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 @Component
 public class UserMapper extends BaseMapper<UserRespDto, User, UserReqDto> {
     @Override
@@ -12,12 +15,16 @@ public class UserMapper extends BaseMapper<UserRespDto, User, UserReqDto> {
         var profile = user.getProfile();
         return new UserRespDto(
                 profile.getName(),
-                profile.getBirthday(),
+                formatDate(profile.getBirthday()),
                 profile.getSex().getValue(),
                 getEntityFieldList(profile.getAddressList(), Address::getAddress),
                 getEntityFieldList(profile.getEmailList(), Email::getEmail),
                 getEntityFieldList(profile.getPhoneList(), Phone::getPhoneNumber)
         );
+    }
+
+    private String formatDate(LocalDate birthday) {
+        return birthday.format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
     }
 
     @Override

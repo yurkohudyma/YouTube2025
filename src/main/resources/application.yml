@@ -11,13 +11,15 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
-    show-sql: false
+    show-sql: false              # show_sql через Hibernate — ВИМКНЕНО (ламає батчінг)
     open-in-view: false
     properties:
       hibernate:
-        show_sql: true
+        show_sql: false          # так само ВИМКНЕНО
+        generate_statistics: true
         jdbc:
           batch_size: 50
+          batch_versioned_data: true
         order_inserts: true
         order_updates: true
 
@@ -28,9 +30,26 @@ spring:
 
 logging:
   level:
-    org.springframework.web: DEBUG
-    org.springframework.web.servlet.DispatcherServlet: DEBUG
-    org.springframework.web.client.RestTemplate: INFO
-    org.springframework.web.HttpLogging: WARN
-    org.springframework.boot.context.config: DEBUG
-    org.springframework.data.repository.config.RepositoryConfigurationExtensionSupport: WARN
+    org:
+      springframework:
+        web: DEBUG
+        web.servlet.DispatcherServlet: DEBUG
+        web.client.RestTemplate: INFO
+        web.HttpLogging: WARN
+        boot.context.config: DEBUG
+        data.repository.config.RepositoryConfigurationExtensionSupport: WARN
+      hibernate:
+        # SQL: DEBUG               # друкує всі SQL
+        type:
+          descriptor:
+            sql:
+              BasicBinder: TRACE # друкує значення параметрів
+        stat: DEBUG              # статистика батчів
+        engine:
+          jdbc:
+            batch:
+              internal: DEBUG   # реальні JDBC batch
+            spi:
+              SqlStatementLogger: TRACE
+
+

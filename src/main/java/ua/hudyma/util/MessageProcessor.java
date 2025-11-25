@@ -1,9 +1,12 @@
 package ua.hudyma.util;
 
+import jakarta.persistence.EntityNotFoundException;
 import lombok.extern.log4j.Log4j2;
 import ua.hudyma.domain.BaseEntity;
 
 import java.util.List;
+import java.util.function.Function;
+import java.util.function.Supplier;
 
 @Log4j2
 public class MessageProcessor {
@@ -28,4 +31,12 @@ public class MessageProcessor {
         log.info(msg);
         return msg;
     }
+
+    public static <E extends Exception> Supplier<E> getExceptionSupplier(
+            Class<?> clazz,
+            String field,
+            Function<String, E> exceptionFactory) {
+        return () -> exceptionFactory.apply(clazz.getSimpleName() + " " + field + " NOT found");
+    }
+
 }
