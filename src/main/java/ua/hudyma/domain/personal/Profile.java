@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import ua.hudyma.domain.BaseEntity;
 import ua.hudyma.enums.Sex;
 
 import java.time.LocalDate;

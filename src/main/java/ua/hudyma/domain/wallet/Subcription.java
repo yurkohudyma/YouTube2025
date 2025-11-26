@@ -1,20 +1,17 @@
 package ua.hudyma.domain.wallet;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Embeddable;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import lombok.Data;
-import org.hibernate.annotations.JdbcTypeCode;
+import ua.hudyma.enums.SubcriptionType;
 
-import java.sql.Types;
-import java.util.UUID;
+import java.math.BigDecimal;
 
+@Embeddable
 @Data
-@Entity
-@Table(name = "subscriptions")
 public class Subcription {
-    @Id
-    @JdbcTypeCode(Types.BINARY)
-    private UUID uuid = UUID.randomUUID();
-    @ManyToOne
-    @JoinColumn(name = "wallet_id")
-    private Wallet wallet;
+    @Enumerated(EnumType.STRING)
+    private SubcriptionType subcriptionType;
+    private BigDecimal price;
 }

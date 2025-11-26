@@ -41,11 +41,15 @@ public class UserService {
 
     @Transactional
     public UserRespDto fetchUser(String email) {
-        var user = userRepository
+        var user = getUser(email);
+        return userMapper.toDto(user);
+    }
+
+    public User getUser(String email) {
+        return userRepository
                 .findByProfile_EmailList_Email(email)
                 .orElseThrow(getExceptionSupplier(User.class, email,
                         EntityNotFoundException::new));
-        return userMapper.toDto(user);
     }
 
 

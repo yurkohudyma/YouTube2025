@@ -16,7 +16,7 @@ spring:
     properties:
       hibernate:
         show_sql: false          # так само ВИМКНЕНО
-        generate_statistics: true
+        #generate_statistics: true
         jdbc:
           batch_size: 50
           batch_versioned_data: true
@@ -40,16 +40,16 @@ logging:
         data.repository.config.RepositoryConfigurationExtensionSupport: WARN
       hibernate:
         # SQL: DEBUG               # друкує всі SQL
-        type:
-          descriptor:
-            sql:
-              BasicBinder: TRACE # друкує значення параметрів
-        stat: DEBUG              # статистика батчів
-        engine:
-          jdbc:
-            batch:
-              internal: DEBUG   # реальні JDBC batch
-            spi:
-              SqlStatementLogger: TRACE
+#        type:
+#          descriptor:
+#            sql:
+#              BasicBinder: TRACE # друкує значення параметрів
+        #stat: DEBUG              # статистика батчів
+#        engine:
+#          jdbc:
+#            batch:
+#              internal: DEBUG   # реальні JDBC batch
+#            spi:
+#              SqlStatementLogger: TRACE
 
 

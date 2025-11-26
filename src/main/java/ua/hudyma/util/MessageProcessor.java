@@ -1,7 +1,7 @@
 package ua.hudyma.util;
 
 import lombok.extern.log4j.Log4j2;
-import ua.hudyma.domain.personal.BaseEntity;
+import ua.hudyma.domain.BaseEntity;
 
 import java.util.List;
 import java.util.function.Function;

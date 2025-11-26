@@ -1,27 +1,20 @@
 package ua.hudyma.domain.wallet;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Embeddable;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import lombok.Data;
-import org.hibernate.annotations.JdbcTypeCode;
 import ua.hudyma.enums.CardType;
 
-import java.sql.Types;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.UUID;
 
-@Entity
-@Table(name = "cards")
+@Embeddable
 @Data
 public class Card {
-    @Id
-    @JdbcTypeCode(Types.BINARY)
-    private UUID uuid = UUID.randomUUID();
+    @Enumerated(EnumType.STRING)
     private CardType cardType;
+    private String cardName;
     private String cardNumber;
-    private LocalDateTime issuedOn;
+    private LocalDate issuedOn;
     private LocalDate expiresOn;
-    @ManyToOne
-    @JoinColumn(name = "wallet_id")
-    private Wallet wallet;
 }

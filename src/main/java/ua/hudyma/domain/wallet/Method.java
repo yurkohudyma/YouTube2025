@@ -1,20 +1,14 @@
 package ua.hudyma.domain.wallet;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Embeddable;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import lombok.Data;
-import org.hibernate.annotations.JdbcTypeCode;
+import ua.hudyma.enums.PaymentMethodType;
 
-import java.sql.Types;
-import java.util.UUID;
-
-@Entity
-@Table(name = "payment_methods")
+@Embeddable
 @Data
 public class Method {
-    @Id
-    @JdbcTypeCode(Types.BINARY)
-    private UUID uuid = UUID.randomUUID();
-    @ManyToOne
-    @JoinColumn(name = "wallet_id")
-    private Wallet wallet;
+    @Enumerated(EnumType.STRING)
+    private PaymentMethodType paymentMethodType;
 }

@@ -3,6 +3,7 @@ package ua.hudyma.domain.personal;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.JdbcTypeCode;
+import ua.hudyma.domain.BaseEntity;
 import ua.hudyma.domain.security.Device;
 import ua.hudyma.domain.wallet.Wallet;
 
@@ -25,7 +26,7 @@ public class User implements BaseEntity {
             name = "user_devices",
             joinColumns = @JoinColumn(name = "user_id"))
     private List<Device> deviceList = new ArrayList<>();
-    @OneToOne(mappedBy = "user")
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private Wallet wallet;
 
 
