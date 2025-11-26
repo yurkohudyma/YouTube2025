@@ -7,6 +7,7 @@ import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.annotations.UuidGenerator;
 import ua.hudyma.domain.BaseEntity;
 import ua.hudyma.domain.personal.User;
+import ua.hudyma.util.IdGenerator;
 
 import java.sql.Types;
 import java.util.ArrayList;
@@ -21,6 +22,7 @@ public class Video implements BaseEntity {
     @UuidGenerator
     @JdbcTypeCode(Types.BINARY)
     private UUID uuid;
+    private String videoId = IdGenerator.generateVideoId();
     private String name;
     @Column(columnDefinition = "text")
     private String description;

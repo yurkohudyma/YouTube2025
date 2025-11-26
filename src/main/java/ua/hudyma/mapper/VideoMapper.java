@@ -8,7 +8,6 @@ import ua.hudyma.domain.content.Video;
 import ua.hudyma.dto.VideoReqDto;
 import ua.hudyma.dto.VideoRespDto;
 import ua.hudyma.repository.ChannelRepository;
-import ua.hudyma.service.ContentService;
 
 import static ua.hudyma.util.MessageProcessor.getExceptionSupplier;
 
@@ -19,7 +18,15 @@ public class VideoMapper extends BaseMapper<VideoRespDto, Video, VideoReqDto>{
     private final ChannelRepository channelRepository;
     @Override
     public VideoRespDto toDto(Video video) {
-        return null;
+        return new VideoRespDto(
+                video.getVideoId(),
+                video.getChannel().getName(),
+                video.getName(),
+                video.getDescription(),
+                video.getViewCounter(),
+                video.getCommentList().size(),
+                video.getEmotionList().size()
+        );
     }
 
     @Override

@@ -6,12 +6,12 @@ import ua.hudyma.domain.wallet.Card;
 import ua.hudyma.domain.wallet.Wallet;
 import ua.hudyma.dto.WalletReqDto;
 import ua.hudyma.dto.WalletRespDto;
-import ua.hudyma.service.UserService;
+import ua.hudyma.service.EntityProviderService;
 
 @Component
 @RequiredArgsConstructor
 public class WalletMapper extends BaseMapper<WalletRespDto, Wallet, WalletReqDto> {
-    private final UserService userService;
+    private final EntityProviderService provider;
 
     @Override
     public WalletRespDto toDto(Wallet wallet) {
@@ -27,7 +27,7 @@ public class WalletMapper extends BaseMapper<WalletRespDto, Wallet, WalletReqDto
 
     @Override
     public Wallet toEntity(WalletReqDto dto) {
-        var user = userService.getUser(dto.userEmail());
+        var user = provider.getUser(dto.userEmail());
         Wallet wallet;
         if (user.getWallet() == null) {
             wallet = new Wallet();

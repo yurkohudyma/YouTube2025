@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.ToString;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.annotations.UuidGenerator;
+import ua.hudyma.domain.BaseEntity;
+import ua.hudyma.domain.personal.User;
 
 import java.sql.Types;
 import java.util.ArrayList;
@@ -14,7 +16,7 @@ import java.util.UUID;
 @Entity
 @Table(name = "comments")
 @Data
-public class Comment {
+public class Comment implements BaseEntity {
     @Id
     @UuidGenerator
     @JdbcTypeCode(Types.BINARY)
@@ -29,4 +31,10 @@ public class Comment {
     @ManyToOne
     @JoinColumn(name = "video_id")
     private Video video;
+    @ManyToOne
+    @JoinColumn(name = "post_id")
+    private Post post;
+    @ManyToOne
+    @JoinColumn(name = "author_id")
+    private User user;
 }

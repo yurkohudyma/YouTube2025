@@ -20,7 +20,8 @@ public class IdGenerator {
     }
 
     private static String generateAlphaNumericId(int size) {
-        return secureRandom.ints(size, 0, chars.length())
+        return secureRandom.ints(size, 0,
+                        chars.length())
                 .mapToObj(chars::charAt)
                 .map(String::valueOf)
                 .collect(Collectors.joining());
@@ -69,6 +70,11 @@ public class IdGenerator {
 
     public static String generateTtn() {
         return "2045" + generateRandomDigits(10);
+    }
+
+    /** YouTube Video  */
+    public static String generateVideoId() {
+        return generateAlphaNumericId(11);
     }
 
     private static String getRandomGSMCode() {

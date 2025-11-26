@@ -23,6 +23,7 @@ import static ua.hudyma.util.MessageProcessor.getReturnMessage;
 public class UserService {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
+    private final EntityProviderService provider;
 
     @SneakyThrows
     @Transactional
@@ -41,16 +42,11 @@ public class UserService {
 
     @Transactional
     public UserRespDto fetchUser(String email) {
-        var user = getUser(email);
+        var user = provider.getUser(email);
         return userMapper.toDto(user);
     }
 
-    public User getUser(String email) {
-        return userRepository
-                .findByProfile_EmailList_Email(email)
-                .orElseThrow(getExceptionSupplier(User.class, email,
-                        EntityNotFoundException::new));
-    }
+
 
 
 }

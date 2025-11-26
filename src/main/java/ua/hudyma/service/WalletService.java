@@ -17,7 +17,7 @@ import ua.hudyma.util.MessageProcessor;
 public class WalletService {
     private final WalletRepository walletRepository;
     private final WalletMapper walletMapper;
-    private final UserService userService;
+    private final EntityProviderService provider;
 
     @Transactional
     @SneakyThrows
@@ -30,7 +30,7 @@ public class WalletService {
 
     @Transactional
     public WalletRespDto fetchWallet(String email) {
-        var user = userService.getUser(email);
+        var user = provider.getUser(email);
         return walletMapper.toDto(user.getWallet());
     }
 }

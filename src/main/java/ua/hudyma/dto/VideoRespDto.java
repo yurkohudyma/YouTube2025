@@ -1,4 +1,14 @@
 package ua.hudyma.dto;
 
-public record VideoRespDto() {
+import java.util.List;
+
+public record VideoRespDto(
+        String videoId,
+        String channelName,
+        String name,
+        String description,
+        Long views,
+        Integer comments,
+        Integer emotions
+) {
 }

@@ -6,12 +6,13 @@ import ua.hudyma.domain.content.Channel;
 import ua.hudyma.domain.content.Video;
 import ua.hudyma.dto.ChannelReqDto;
 import ua.hudyma.dto.ChannelRespDto;
+import ua.hudyma.service.EntityProviderService;
 import ua.hudyma.service.UserService;
 
 @Component
 @RequiredArgsConstructor
 public class ChannelMapper extends BaseMapper<ChannelRespDto, Channel, ChannelReqDto> {
-    private final UserService userService;
+    private final EntityProviderService provider;
     @Override
     public ChannelRespDto toDto(Channel channel) {
         return new ChannelRespDto(
@@ -27,7 +28,7 @@ public class ChannelMapper extends BaseMapper<ChannelRespDto, Channel, ChannelRe
 
     @Override
     public Channel toEntity(ChannelReqDto dto) {
-        var user = userService.getUser(dto.email());
+        var user = provider.getUser(dto.email());
         var channel = new Channel();
         channel.setUser(user);
         channel.setName(dto.name());
