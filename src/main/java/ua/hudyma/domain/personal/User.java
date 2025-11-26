@@ -2,8 +2,11 @@ package ua.hudyma.domain.personal;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.ToString;
 import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.annotations.UuidGenerator;
 import ua.hudyma.domain.BaseEntity;
+import ua.hudyma.domain.content.Channel;
 import ua.hudyma.domain.security.Device;
 import ua.hudyma.domain.wallet.Wallet;
 
@@ -17,8 +20,9 @@ import java.util.UUID;
 @Data
 public class User implements BaseEntity {
     @Id
+    @UuidGenerator
     @JdbcTypeCode(Types.BINARY)
-    private UUID uuid = UUID.randomUUID();
+    private UUID uuid;
     @Embedded
     private Profile profile;
     @ElementCollection
@@ -28,6 +32,12 @@ public class User implements BaseEntity {
     private List<Device> deviceList = new ArrayList<>();
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private Wallet wallet;
-
-
+    @OneToMany(mappedBy = "user",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    @ToString.Exclude
+    private List<Channel> channelList = new ArrayList<>();
+    @ManyToMany(mappedBy = "subscriberList")
+    @ToString.Exclude
+    private List<Channel> subscribedChannelList = new ArrayList<>();
 }

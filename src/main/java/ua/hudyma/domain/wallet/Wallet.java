@@ -3,6 +3,7 @@ package ua.hudyma.domain.wallet;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.annotations.UuidGenerator;
 import ua.hudyma.domain.BaseEntity;
 import ua.hudyma.domain.personal.User;
 
@@ -16,8 +17,9 @@ import java.util.UUID;
 @Data
 public class Wallet implements BaseEntity {
     @Id
+    @UuidGenerator
     @JdbcTypeCode(Types.BINARY)
-    private UUID uuid = UUID.randomUUID();
+    private UUID uuid;
     @OneToOne
     @JoinColumn(name = "user_id")
     private User user;

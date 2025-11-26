@@ -5,7 +5,7 @@ import java.util.List;
 public record WalletRespDto(
         String userName,
         List<String> methodList,
-        List<String> subscriptioList,
+        List<String> subscriptionList,
         List<String> cardList
 
 ) {

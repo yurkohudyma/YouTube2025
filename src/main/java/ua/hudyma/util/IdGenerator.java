@@ -4,11 +4,27 @@ import java.security.SecureRandom;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class IdGenerator {
 
     private final static List<String> gsmCodesList = List.of("67", "68", "50", "96", "98", "95", "99");
     private final static SecureRandom secureRandom = new SecureRandom();
+    private final static String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+    /** YouTube Channel  */
+    public static String generateChannelId(
+    ) {
+        return "UC" + generateAlphaNumericId(22);
+    }
+
+    private static String generateAlphaNumericId(int size) {
+        return secureRandom.ints(size, 0, chars.length())
+                .mapToObj(chars::charAt)
+                .map(String::valueOf)
+                .collect(Collectors.joining());
+    }
 
     public static Integer generateCityCode() {
         return generateRandomDigits();
@@ -23,10 +39,10 @@ public class IdGenerator {
     }
 
     public static String generateLinkedProfileUrl(String fullName, String userCode) {
-        if (fullName == null || fullName.isEmpty()){
+        if (fullName == null || fullName.isEmpty()) {
             throw new IllegalArgumentException("Fullname is empty or NULL, cannot generate profile url");
         }
-        if (userCode == null || userCode.isEmpty()){
+        if (userCode == null || userCode.isEmpty()) {
             throw new IllegalArgumentException("UserCode is empty or NULL, cannot generate profile url");
         }
         var fullnameArray = fullName.split("\\s");
@@ -61,7 +77,7 @@ public class IdGenerator {
 
     public static String generateProductCode(String catName) {
         return catName
-                .substring(0,2)
+                .substring(0, 2)
                 .toUpperCase() +
                 generateRandomDigits(10);
     }

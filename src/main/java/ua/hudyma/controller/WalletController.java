@@ -13,11 +13,15 @@ import ua.hudyma.service.WalletService;
 public class WalletController {
     private final WalletService walletService;
     @PostMapping
-    public ResponseEntity<String> createWallet (@RequestBody WalletReqDto dto){
-        return ResponseEntity.ok(walletService.createWallet(dto));
+    public ResponseEntity<String> createWallet (
+            @RequestBody WalletReqDto dto){
+        return ResponseEntity.ok(walletService
+                .createWallet(dto));
     }
     @GetMapping
-    public ResponseEntity<WalletRespDto> fetchWallet (@RequestParam String email){
-        return ResponseEntity.ok(walletService.fetchWallet(email));
+    public ResponseEntity<WalletRespDto> fetchWallet (
+            @RequestParam String email){
+        return ResponseEntity.ok(walletService
+                .fetchWallet(email));
     }
 }
