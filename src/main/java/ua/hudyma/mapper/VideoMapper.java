@@ -31,6 +31,8 @@ public class VideoMapper extends BaseMapper<VideoRespDto, Video, VideoReqDto>{
                 video.getEmotionList().size(),
                 getEntityFieldList(
                         video.getPurchaserUserList(),
+                        user -> user.getProfile().getName()),
+                getEntityFieldList(video.getRenterUserList(),
                         user -> user.getProfile().getName())
         );
     }

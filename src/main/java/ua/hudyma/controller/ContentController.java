@@ -46,13 +46,16 @@ public class ContentController {
         return ResponseEntity.ok(contentService.fetchComment(commentId));
     }
     @PostMapping("/emotion")
-    public ResponseEntity<String> createEmotion (@RequestBody EmotionReqDto dto){
-        return ResponseEntity.ok(contentService.createEmotion(dto));
+    public ResponseEntity<String> createEmotion (
+            @RequestBody EmotionReqDto dto){
+        return ResponseEntity.ok(contentService
+                .createEmotion(dto));
     }
     @GetMapping("/video/emotions")
     public ResponseEntity<List<EmotionRespDto>> fetchAllVideoEmotions (
             @RequestParam String videoId){
-        return ResponseEntity.ok(contentService.fetchAllVideoEmotions(videoId));
+        return ResponseEntity.ok(contentService
+                .fetchAllVideoEmotions(videoId));
     }
     @PostMapping("/video/tag")
     public ResponseEntity<String> addTags (
@@ -62,10 +65,10 @@ public class ContentController {
                 .addTags(tagList, videoId));
     }
     @GetMapping("/video/compareTags")
-    public ResponseEntity<List<String>> findVideoListWithAtLeastOneTag (
+    public ResponseEntity<List<String>> findVideoListWithTags(
             @RequestParam String videoId){
         return ResponseEntity.ok(contentService
-                .findVideoListWithAtLeastOneTag(videoId));
+                .collectVideosByTags(videoId));
     }
     @GetMapping("/video/purchase")
     public ResponseEntity<String> purchaseVideo (
@@ -73,5 +76,12 @@ public class ContentController {
             @RequestParam String videoId){
         return ResponseEntity.ok(contentService
                 .purchaseVideo(email, videoId));
+    }
+    @GetMapping("/video/rent")
+    public ResponseEntity<String> rentVideo (
+            @RequestParam String email,
+            @RequestParam String videoId){
+        return ResponseEntity.ok(contentService
+                .rentVideo(email, videoId));
     }
 }

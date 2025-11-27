@@ -52,6 +52,10 @@ public class Video implements BaseEntity {
             inverseJoinColumns = @JoinColumn(name = "purchaser_id"))
     @ToString.Exclude
     private List<User> purchaserUserList = new ArrayList<>();
-
-    //todo купівля чи прокат фільмів
+    @ManyToMany
+    @JoinTable(name = "users_rent_videos",
+            joinColumns = @JoinColumn(name = "rented_video_id"),
+            inverseJoinColumns = @JoinColumn(name = "renter_id"))
+    @ToString.Exclude
+    private List<User> renterUserList = new ArrayList<>();
 }

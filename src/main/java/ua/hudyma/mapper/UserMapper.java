@@ -19,11 +19,18 @@ public class UserMapper extends BaseMapper<UserRespDto, User, UserReqDto> {
                 profile.getName(),
                 formatDate(profile.getBirthday()),
                 profile.getSex().getValue(),
-                getEntityFieldList(profile.getAddressList(), Address::getAddress),
-                getEntityFieldList(profile.getEmailList(), Email::getEmail),
-                getEntityFieldList(profile.getPhoneList(), Phone::getPhoneNumber),
-                getEntityFieldList(user.getDeviceList(), Device::getDeviceName),
-                getEntityFieldList(user.getPurchasedVideoList(), Video::getName)
+                getEntityFieldList(profile.getAddressList(),
+                        Address::getAddress),
+                getEntityFieldList(profile.getEmailList(),
+                        Email::getEmail),
+                getEntityFieldList(profile.getPhoneList(),
+                        Phone::getPhoneNumber),
+                getEntityFieldList(user.getDeviceList(),
+                        Device::getDeviceName),
+                getEntityFieldList(user.getPurchasedVideoList(),
+                        Video::getName),
+                getEntityFieldList(user.getRentedVideoList(),
+                        Video::getName)
         );
     }
 

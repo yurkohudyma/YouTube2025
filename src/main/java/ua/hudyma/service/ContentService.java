@@ -103,7 +103,7 @@ public class ContentService {
     }
 
     @Transactional
-    public List<String> findVideoListWithAtLeastOneTag(String videoId) {
+    public List<String> collectVideosByTags(String videoId) {
         var requestedVideo = provider.getVideo(videoId);
         return videoRepository
                 .findAll()
@@ -120,10 +120,22 @@ public class ContentService {
         var video = provider.getVideo(videoId);
         user.getPurchasedVideoList().add(video);
         video.getPurchaserUserList().add(user);
-        return String.format("%s було придбано %s", video.getName(), user.getProfile().getName());
+        return String.format("%s придбав(-ла) %s",
+                user.getProfile().getName(), video.getName());
     }
 
-    private boolean findMatchingTags(Video video, Video requestedVideo) {
+    @Transactional
+    public String rentVideo(String email, String videoId) {
+        var user = provider.getUser(email);
+        var video = provider.getVideo(videoId);
+        user.getRentedVideoList().add(video);
+        video.getRenterUserList().add(user);
+        return String.format("%s придбав(-ла) право перегляду %s",
+                user.getProfile().getName(), video.getName());
+    }
+
+    private boolean findMatchingTags(Video video,
+                                     Video requestedVideo) {
         var tagList = video.getTagList();
         var requestedTagList = requestedVideo.getTagList();
         var counter = 0;

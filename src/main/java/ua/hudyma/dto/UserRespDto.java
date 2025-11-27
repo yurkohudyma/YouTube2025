@@ -10,6 +10,7 @@ public record UserRespDto(
         List<String> emailList,
         List<String> phoneList,
         List<String> deviceList,
-        List<String> purchasedVideoList
+        List<String> purchasedVideoList,
+        List<String> rentedVideoList
         ) {
 }

@@ -56,5 +56,8 @@ public class User implements BaseEntity {
     @ManyToMany(mappedBy = "purchaserUserList")
     @ToString.Exclude
     private List<Video> purchasedVideoList = new ArrayList<>();
+    @ManyToMany(mappedBy = "renterUserList")
+    @ToString.Exclude
+    private List<Video> rentedVideoList = new ArrayList<>();
 
 }
