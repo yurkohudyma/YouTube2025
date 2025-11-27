@@ -118,9 +118,16 @@ public class ContentService {
     public String purchaseVideo(String email, String videoId) {
         var user = provider.getUser(email);
         var video = provider.getVideo(videoId);
-        user.getPurchasedVideoList().add(video);
-        video.getPurchaserUserList().add(user);
-        return String.format("%s придбав(-ла) %s",
+        var videoList = user.getPurchasedVideoList();
+        var userList = video.getPurchaserUserList();
+        if (!videoList.contains(video) &&
+            !userList.contains(user)) {
+            videoList.add(video);
+            video.getPurchaserUserList().add(user);
+            return String.format("%s придбав(-ла) %s",
+                    user.getProfile().getName(), video.getName());
+        }
+        return String.format("%s ВЖЕ придбав(-ла) %s",
                 user.getProfile().getName(), video.getName());
     }
 
@@ -128,9 +135,16 @@ public class ContentService {
     public String rentVideo(String email, String videoId) {
         var user = provider.getUser(email);
         var video = provider.getVideo(videoId);
-        user.getRentedVideoList().add(video);
-        video.getRenterUserList().add(user);
-        return String.format("%s придбав(-ла) право перегляду %s",
+        var videoList = user.getRentedVideoList();
+        var userList = video.getRenterUserList();
+        if (!videoList.contains(video) &&
+                !userList.contains(user)) {
+            user.getRentedVideoList().add(video);
+            video.getRenterUserList().add(user);
+            return String.format("%s придбав(-ла) право перегляду %s",
+                    user.getProfile().getName(), video.getName());
+        }
+        return String.format("%s ВЖЕ придбав(-ла) права перегляду %s",
                 user.getProfile().getName(), video.getName());
     }
 
