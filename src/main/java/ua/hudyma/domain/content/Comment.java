@@ -7,6 +7,7 @@ import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.annotations.UuidGenerator;
 import ua.hudyma.domain.BaseEntity;
 import ua.hudyma.domain.personal.User;
+import ua.hudyma.util.IdGenerator;
 
 import java.sql.Types;
 import java.util.ArrayList;
@@ -21,6 +22,7 @@ public class Comment implements BaseEntity {
     @UuidGenerator
     @JdbcTypeCode(Types.BINARY)
     private UUID uuid;
+    private String commentId = IdGenerator.generateId(2,10);
     @Column(columnDefinition = "text")
     private String text;
     @OneToMany(mappedBy = "comment",

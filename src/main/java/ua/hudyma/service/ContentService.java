@@ -1,21 +1,22 @@
 package ua.hudyma.service;
 
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ua.hudyma.domain.content.Channel;
+import ua.hudyma.domain.content.Tag;
 import ua.hudyma.domain.content.Video;
-import ua.hudyma.domain.personal.User;
 import ua.hudyma.dto.*;
 import ua.hudyma.mapper.*;
-import ua.hudyma.repository.*;
+import ua.hudyma.repository.ChannelRepository;
+import ua.hudyma.repository.CommentRepository;
+import ua.hudyma.repository.EmotionRepository;
+import ua.hudyma.repository.VideoRepository;
 import ua.hudyma.util.MessageProcessor;
 
-import static ua.hudyma.util.MessageProcessor.getExceptionSupplier;
+import java.util.List;
+
 import static ua.hudyma.util.MessageProcessor.getReturnMessage;
 
 @Service
@@ -26,12 +27,21 @@ public class ContentService {
     private final VideoRepository videoRepository;
     private final EntityProviderService provider;
     private final CommentRepository commentRepository;
+    private final EmotionRepository emotionRepository;
 
     private final ChannelMapper channelMapper;
     private final VideoMapper videoMapper;
     private final PostMapper postMapper;
     private final CommentMapper commentMapper;
     private final EmotionMapper emotionMapper;
+
+    @Transactional
+    @SneakyThrows
+    public String addTags(List<Tag> tagList, String videoId) {
+        var video = provider.getVideo(videoId);
+        video.getTagList().addAll(tagList);
+        return getReturnMessage(tagList, "");
+    }
 
     @Transactional
     @SneakyThrows
@@ -54,10 +64,24 @@ public class ContentService {
     }
 
     @SneakyThrows
+    public String createEmotion(EmotionReqDto dto) {
+        var emotion = emotionMapper.toEntity(dto);
+        emotionRepository.save(emotion);
+        return getReturnMessage(emotion, "emotionType");
+    }
+
+    @SneakyThrows
     public String createVideo(VideoReqDto dto) {
         var video = videoMapper.toEntity(dto);
         videoRepository.save(video);
         return getReturnMessage(video, "name");
+    }
+
+    @Transactional
+    public List<EmotionRespDto> fetchAllVideoEmotions(String videoId) {
+        var video = provider.getVideo(videoId);
+        var list = video.getEmotionList();
+        return emotionMapper.toDtoList(list);
     }
 
     @Transactional
@@ -67,9 +91,43 @@ public class ContentService {
     }
 
     @Transactional
+    public CommentRespDto fetchComment(String commentId) {
+        var comment = provider.getComment(commentId);
+        return commentMapper.toDto(comment);
+    }
+
+    @Transactional
     public VideoRespDto fetchVideo(String videoId) {
         var video = provider.getVideo(videoId);
         return videoMapper.toDto(video);
+    }
+
+    @Transactional
+    public List<String> findVideoListWithAtLeastOneTag(String videoId) {
+        var requestedVideo = provider.getVideo(videoId);
+        return videoRepository
+                .findAll()
+                .stream()
+                .filter(video -> !video.getVideoId().equals(videoId))
+                .filter(video -> findMatchingTags(video, requestedVideo))
+                .map(Video::getName)
+                .toList();
+    }
+    private boolean findMatchingTags(Video video, Video requestedVideo) {
+        var tagList = video.getTagList();
+        var requestedTagList = requestedVideo.getTagList();
+        var counter = 0;
+        for (Tag tag : tagList) {
+            if (requestedTagList.contains(tag)) {
+                log.info("Video {} and {} MATCH by TAG: {}",
+                        requestedVideo.getVideoId(),
+                        video.getVideoId(),
+                        tag.getName()
+                );
+                counter++;
+            }
+        }
+        return counter >= 2;
     }
 
     @Transactional

@@ -6,7 +6,6 @@ import ua.hudyma.domain.content.Comment;
 import ua.hudyma.dto.CommentReqDto;
 import ua.hudyma.dto.CommentRespDto;
 import ua.hudyma.service.EntityProviderService;
-import ua.hudyma.service.UserService;
 
 @Component
 @RequiredArgsConstructor
@@ -14,7 +13,19 @@ public class CommentMapper extends BaseMapper<CommentRespDto, Comment, CommentRe
     private final EntityProviderService provider;
     @Override
     public CommentRespDto toDto(Comment comment) {
-        return null;
+        String postName;
+        String videoName;
+        postName = comment.getPost() == null ? "NA": comment.getPost().getName();
+        videoName = comment.getVideo() == null ? "NA": comment.getVideo().getName();
+        return new CommentRespDto(
+                comment.getCommentId(),
+                comment.getText(),
+                videoName,
+                postName,
+                comment.getUser().getProfile().getName(),
+                getEntityFieldList(comment.getEmotionList(),
+                        cmt -> cmt.getEmotionType().name())
+        );
     }
 
     @Override

@@ -3,8 +3,11 @@ package ua.hudyma.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ua.hudyma.domain.content.Tag;
 import ua.hudyma.dto.*;
 import ua.hudyma.service.ContentService;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -37,5 +40,31 @@ public class ContentController {
     @PostMapping("/commentVideo")
     public ResponseEntity<String> commentVideo (@RequestBody CommentReqDto dto){
         return ResponseEntity.ok(contentService.commentVideo(dto));
+    }
+    @GetMapping("/comment")
+    public ResponseEntity<CommentRespDto> fetchComment (@RequestParam String commentId){
+        return ResponseEntity.ok(contentService.fetchComment(commentId));
+    }
+    @PostMapping("/emotion")
+    public ResponseEntity<String> createEmotion (@RequestBody EmotionReqDto dto){
+        return ResponseEntity.ok(contentService.createEmotion(dto));
+    }
+    @GetMapping("/video/emotions")
+    public ResponseEntity<List<EmotionRespDto>> fetchAllVideoEmotions (
+            @RequestParam String videoId){
+        return ResponseEntity.ok(contentService.fetchAllVideoEmotions(videoId));
+    }
+    @PostMapping("/video/tag")
+    public ResponseEntity<String> addTags (
+            @RequestBody List<Tag> tagList,
+            @RequestParam String videoId){
+        return ResponseEntity.ok(contentService
+                .addTags(tagList, videoId));
+    }
+    @GetMapping("/video/compareTags")
+    public ResponseEntity<List<String>> findVideoListWithAtLeastOneTag (
+            @RequestParam String videoId){
+        return ResponseEntity.ok(contentService
+                .findVideoListWithAtLeastOneTag(videoId));
     }
 }

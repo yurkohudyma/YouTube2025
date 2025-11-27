@@ -7,7 +7,6 @@ import ua.hudyma.domain.content.Video;
 import ua.hudyma.dto.ChannelReqDto;
 import ua.hudyma.dto.ChannelRespDto;
 import ua.hudyma.service.EntityProviderService;
-import ua.hudyma.service.UserService;
 
 @Component
 @RequiredArgsConstructor

@@ -4,6 +4,7 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import ua.hudyma.domain.content.Channel;
+import ua.hudyma.domain.content.Tag;
 import ua.hudyma.domain.content.Video;
 import ua.hudyma.dto.VideoReqDto;
 import ua.hudyma.dto.VideoRespDto;
@@ -22,11 +23,18 @@ public class VideoMapper extends BaseMapper<VideoRespDto, Video, VideoReqDto>{
                 video.getVideoId(),
                 video.getChannel().getName(),
                 video.getName(),
-                video.getDescription(),
+                adaptDescription(video),
+                getEntityFieldList(video.getTagList(),
+                        Tag::getName),
                 video.getViewCounter(),
                 video.getCommentList().size(),
                 video.getEmotionList().size()
         );
+    }
+
+    private static String adaptDescription(Video video) {
+        var description = video.getDescription();
+        return description.length() > 30 ? description.substring(0,30) : description;
     }
 
     @Override
@@ -36,6 +44,7 @@ public class VideoMapper extends BaseMapper<VideoRespDto, Video, VideoReqDto>{
         video.setName(dto.name());
         video.setDescription(dto.description());
         video.setChannel(channel);
+        video.getTagList().addAll(dto.tagList());
         return video;
     }
 

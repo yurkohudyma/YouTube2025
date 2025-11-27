@@ -7,6 +7,7 @@ public record VideoRespDto(
         String channelName,
         String name,
         String description,
+        List<String> tagList,
         Long views,
         Integer comments,
         Integer emotions

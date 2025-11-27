@@ -7,6 +7,7 @@ import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.annotations.UuidGenerator;
 import ua.hudyma.domain.BaseEntity;
 import ua.hudyma.domain.personal.User;
+import ua.hudyma.domain.security.Device;
 import ua.hudyma.util.IdGenerator;
 
 import java.sql.Types;
@@ -40,6 +41,11 @@ public class Video implements BaseEntity {
             orphanRemoval = true)
     @ToString.Exclude
     private List<Emotion> emotionList = new ArrayList<>();
+    @ElementCollection
+    @CollectionTable(
+            name = "video_tags",
+            joinColumns = @JoinColumn(name = "video_id"))
+    private List<Tag> tagList = new ArrayList<>();
 
 
 

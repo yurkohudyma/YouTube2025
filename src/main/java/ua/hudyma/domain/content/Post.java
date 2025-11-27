@@ -20,11 +20,17 @@ public class Post {
     @UuidGenerator
     @JdbcTypeCode(Types.BINARY)
     private UUID uuid;
+    private String name;
     private String postId = IdGenerator.generateId(2,7);
     @OneToMany(mappedBy = "post",
             cascade = CascadeType.ALL,
             orphanRemoval = true)
     @ToString.Exclude
     private List<Comment> commentList = new ArrayList<>();
+    @OneToMany(mappedBy = "post",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    @ToString.Exclude
+    private List<Emotion> emotionList = new ArrayList<>();
 
 }
