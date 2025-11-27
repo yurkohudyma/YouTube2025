@@ -3,16 +3,15 @@ package ua.hudyma.service;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.log4j.Log4j2;
+import org.antlr.v4.runtime.misc.LogManager;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.hudyma.domain.content.Tag;
 import ua.hudyma.domain.content.Video;
 import ua.hudyma.dto.*;
 import ua.hudyma.mapper.*;
-import ua.hudyma.repository.ChannelRepository;
-import ua.hudyma.repository.CommentRepository;
-import ua.hudyma.repository.EmotionRepository;
-import ua.hudyma.repository.VideoRepository;
+import ua.hudyma.repository.*;
 import ua.hudyma.util.MessageProcessor;
 
 import java.util.List;
@@ -28,6 +27,7 @@ public class ContentService {
     private final EntityProviderService provider;
     private final CommentRepository commentRepository;
     private final EmotionRepository emotionRepository;
+    private final PostRepository postRepository;
 
     private final ChannelMapper channelMapper;
     private final VideoMapper videoMapper;
@@ -68,6 +68,13 @@ public class ContentService {
         var emotion = emotionMapper.toEntity(dto);
         emotionRepository.save(emotion);
         return getReturnMessage(emotion, "emotionType");
+    }
+
+    @SneakyThrows
+    public String createPost(PostReqDto dto) {
+        var post = postMapper.toEntity(dto);
+        postRepository.save(post);
+        return getReturnMessage(post, "name");
     }
 
     @SneakyThrows

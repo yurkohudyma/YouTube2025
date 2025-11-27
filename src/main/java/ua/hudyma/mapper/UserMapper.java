@@ -1,6 +1,7 @@
 package ua.hudyma.mapper;
 
 import org.springframework.stereotype.Component;
+import ua.hudyma.domain.content.Post;
 import ua.hudyma.domain.content.Video;
 import ua.hudyma.domain.personal.*;
 import ua.hudyma.domain.security.Device;
@@ -15,10 +16,11 @@ public class UserMapper extends BaseMapper<UserRespDto, User, UserReqDto> {
     @Override
     public UserRespDto toDto(User user) {
         var profile = user.getProfile();
+        var sex = profile.getSex() == null ? "NA" : profile.getSex().getValue();
         return new UserRespDto(
                 profile.getName(),
                 formatDate(profile.getBirthday()),
-                profile.getSex().getValue(),
+                sex,
                 getEntityFieldList(profile.getAddressList(),
                         Address::getAddress),
                 getEntityFieldList(profile.getEmailList(),
@@ -30,11 +32,13 @@ public class UserMapper extends BaseMapper<UserRespDto, User, UserReqDto> {
                 getEntityFieldList(user.getPurchasedVideoList(),
                         Video::getName),
                 getEntityFieldList(user.getRentedVideoList(),
-                        Video::getName)
+                        Video::getName),
+                getEntityFieldList(user.getPostList(), Post::getName)
         );
     }
 
     private String formatDate(LocalDate birthday) {
+        if (birthday == null) return "NA";
         return birthday.format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
     }
 

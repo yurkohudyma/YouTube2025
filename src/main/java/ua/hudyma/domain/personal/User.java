@@ -6,10 +6,7 @@ import lombok.ToString;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.annotations.UuidGenerator;
 import ua.hudyma.domain.BaseEntity;
-import ua.hudyma.domain.content.Channel;
-import ua.hudyma.domain.content.Comment;
-import ua.hudyma.domain.content.Emotion;
-import ua.hudyma.domain.content.Video;
+import ua.hudyma.domain.content.*;
 import ua.hudyma.domain.security.Device;
 import ua.hudyma.domain.wallet.Wallet;
 
@@ -59,5 +56,10 @@ public class User implements BaseEntity {
     @ManyToMany(mappedBy = "renterUserList")
     @ToString.Exclude
     private List<Video> rentedVideoList = new ArrayList<>();
+    @OneToMany(mappedBy = "user",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    @ToString.Exclude
+    private List<Post> postList = new ArrayList<>();
 
 }

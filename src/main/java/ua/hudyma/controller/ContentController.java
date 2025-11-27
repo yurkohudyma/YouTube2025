@@ -84,4 +84,9 @@ public class ContentController {
         return ResponseEntity.ok(contentService
                 .rentVideo(email, videoId));
     }
+
+    @PostMapping("/post")
+    public ResponseEntity<String> createPost (@RequestBody PostReqDto dto){
+        return ResponseEntity.ok(contentService.createPost(dto));
+    }
 }
