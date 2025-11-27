@@ -10,6 +10,7 @@ public record VideoRespDto(
         List<String> tagList,
         Long views,
         Integer comments,
-        Integer emotions
+        Integer emotions,
+        List<String> purchaserList
 ) {
 }

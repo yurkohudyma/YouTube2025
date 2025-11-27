@@ -1,6 +1,7 @@
 package ua.hudyma.mapper;
 
 import org.springframework.stereotype.Component;
+import ua.hudyma.domain.content.Video;
 import ua.hudyma.domain.personal.*;
 import ua.hudyma.domain.security.Device;
 import ua.hudyma.dto.UserReqDto;
@@ -21,7 +22,8 @@ public class UserMapper extends BaseMapper<UserRespDto, User, UserReqDto> {
                 getEntityFieldList(profile.getAddressList(), Address::getAddress),
                 getEntityFieldList(profile.getEmailList(), Email::getEmail),
                 getEntityFieldList(profile.getPhoneList(), Phone::getPhoneNumber),
-                getEntityFieldList(user.getDeviceList(), Device::getDeviceName)
+                getEntityFieldList(user.getDeviceList(), Device::getDeviceName),
+                getEntityFieldList(user.getPurchasedVideoList(), Video::getName)
         );
     }
 

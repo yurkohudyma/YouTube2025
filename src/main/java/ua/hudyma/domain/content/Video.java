@@ -46,17 +46,12 @@ public class Video implements BaseEntity {
             name = "video_tags",
             joinColumns = @JoinColumn(name = "video_id"))
     private List<Tag> tagList = new ArrayList<>();
-
-
-
-
-
-
-
-
-
-
-    //todo recommendation system for feedline
+    @ManyToMany
+    @JoinTable(name = "users_purchase_videos",
+            joinColumns = @JoinColumn(name = "purchased_video_id"),
+            inverseJoinColumns = @JoinColumn(name = "purchaser_id"))
+    @ToString.Exclude
+    private List<User> purchaserUserList = new ArrayList<>();
 
     //todo купівля чи прокат фільмів
 }

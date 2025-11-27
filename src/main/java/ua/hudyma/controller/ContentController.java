@@ -67,4 +67,11 @@ public class ContentController {
         return ResponseEntity.ok(contentService
                 .findVideoListWithAtLeastOneTag(videoId));
     }
+    @GetMapping("/video/purchase")
+    public ResponseEntity<String> purchaseVideo (
+            @RequestParam String email,
+            @RequestParam String videoId){
+        return ResponseEntity.ok(contentService
+                .purchaseVideo(email, videoId));
+    }
 }

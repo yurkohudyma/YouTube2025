@@ -113,6 +113,16 @@ public class ContentService {
                 .map(Video::getName)
                 .toList();
     }
+
+    @Transactional
+    public String purchaseVideo(String email, String videoId) {
+        var user = provider.getUser(email);
+        var video = provider.getVideo(videoId);
+        user.getPurchasedVideoList().add(video);
+        video.getPurchaserUserList().add(user);
+        return String.format("%s було придбано %s", video.getName(), user.getProfile().getName());
+    }
+
     private boolean findMatchingTags(Video video, Video requestedVideo) {
         var tagList = video.getTagList();
         var requestedTagList = requestedVideo.getTagList();
